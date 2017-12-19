@@ -11,7 +11,6 @@ headers = {'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64)"
 
 def get_posts(url, queue, headers=None):
     while True:
-        titles = set()
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.text, "html.parser")
         post_list = soup.find('div', {'class': 'feed__container'})
@@ -44,6 +43,7 @@ def get_posts(url, queue, headers=None):
 if __name__ == "__main__":
     url = 'https://tjournal.ru/recent'
     queue = Queue()
+    titles = set()
 
     thread = Thread(target=get_posts, args=(url, queue), kwargs={'headers':headers,})
     thread.daemon = True
